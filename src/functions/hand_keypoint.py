@@ -27,4 +27,4 @@ def detect_hand_keypoints(width, height, frame):
             print(pixelCoordinatesLandmark)
             temp = pixelCoordinatesLandmark
             mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-    return temp
+    return temp, frame

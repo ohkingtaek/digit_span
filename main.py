@@ -1,8 +1,6 @@
 import sys
-import os
 import shutil
-import platform
-import time, schedule
+import schedule
 import collections
 
 import pandas as pd
@@ -85,7 +83,7 @@ class MainWindow(QMainWindow):
         card.reset_index(drop=True, inplace=True)
 
         lis = list()
-        if card.iloc[0]['xmin'] > card.iloc[1]['xmin']:
+        if card.iloc[0]['xmin'] < card.iloc[1]['xmin']:
             lis.append([card.iloc[0]['xmin'], card.iloc[0]['ymin'], card.iloc[1]['xmax'], card.iloc[1]['ymax'], card.iloc[0]['name']])
         else:
             lis.append([card.iloc[1]['xmin'], card.iloc[1]['ymin'], card.iloc[0]['xmax'], card.iloc[0]['ymax'], card.iloc[0]['name']])
@@ -94,6 +92,7 @@ class MainWindow(QMainWindow):
         card.drop(card.index[0:], inplace=True)
         card.drop(['confidence', 'class'], axis=1, inplace=True)
         card.loc[0] = lis[0] #only one
+        self.df = card.copy()
 
     def streaming_video(self):
         self.thread = VideoStreamThread(self)
