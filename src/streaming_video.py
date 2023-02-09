@@ -20,14 +20,15 @@ class VideoStreamThread(QThread):
             if ret:
                 rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 finger, img = detect_hand_keypoints(width, height, rgb_image)
-                print(finger)
-                ans = circulate(self, self.card, finger)
-                if ans is not None:
-                    cv2.putText(
-                        img, text='match=%d ' % (ans), org=(10, 30),
-                        fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1,
-                        color=255, thickness=3
-                    )
+                if finger is not None:
+                    print(finger)
+                    ans = circulate(self, self.card, finger)
+                    if ans is not None:
+                        cv2.putText(
+                            img, text='match=%s ' % (ans), org=(10, 30),
+                            fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=3,
+                            color=255, thickness=3
+                        )
                 h, w, ch = img.shape
                 bytes_per_line = ch * w
                 convert_to_qt_format = QImage(img.data, w, h, bytes_per_line, QImage.Format_RGB888)

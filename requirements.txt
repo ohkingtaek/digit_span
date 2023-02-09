@@ -8,6 +8,7 @@ PySide6
 mediapipe
 
 #YoloV5
+gitpython
 PyYAML
 requests
 psutil

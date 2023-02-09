@@ -40,6 +40,11 @@ class MainWindow(QMainWindow):
 
     def load_image(self):
         frames = self.image_save()
+        dir = 'runs/detect'
+        try:
+            shutil.rmtree(dir)
+        except FileNotFoundError:
+            pass
         self.card_detection(frames)
 
         img_path = 'runs/detect/exp/img1.jpg'
@@ -62,7 +67,7 @@ class MainWindow(QMainWindow):
         return captured_num
 
     def card_detection(self, frames): 
-        image = './assets/img/img'+str(frames)+'.jpg'
+        image = './assets/img/img1.jpg'
         image = Image.open(image)
         card = card_detect(image)
         if card is None:
@@ -93,9 +98,11 @@ class MainWindow(QMainWindow):
         card.drop(['confidence', 'class'], axis=1, inplace=True)
         card.loc[0] = lis[0] #only one
         self.df = card.copy()
+        print(self.df)
 
     def streaming_video(self):
         self.thread = VideoStreamThread(self)
+        self.thread.card = self.df
         self.thread.change_pixmap.connect(self.set_image)
         self.thread.start()
 
