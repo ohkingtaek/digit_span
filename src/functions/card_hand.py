@@ -8,4 +8,12 @@ def circulate(self, card, finger):
     if xmin < finger_x < xmax:
         if ymin < finger_y < ymax:
             return 'Match'
-    return 'Not Match'
+        elif ymax < finger_y < ymin:
+            return 'Match'
+    elif xmax < finger_x < xmin:
+        if ymin < finger_y < ymax:
+            return 'Match'
+        elif ymax < finger_y < ymin:
+            return 'Match'
+    else:
+        return 'Not Match'

@@ -3,3 +3,4 @@ temp.ipynb
 lib/
 __pycache__/
 assets/img/img1.jpg
+.DS_Store
